@@ -47,9 +47,12 @@ function main() {
 
     document.body.prepend(gameScreen);
 
-    setTimeout(function() {
-      destroyGameScreen()
-    }, 3000)
+    var canvasElement = document.querySelector('canvas');
+
+    var game = new Game(canvasElement);
+    game.start();
+
+    game.onGameOverCallback(destroyGameScreen);
 
   }
 
