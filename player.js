@@ -37,10 +37,7 @@ Player.prototype.collidesWithEnemy = function(enemy) {
   var collidesTop = enemy.y <= this.y + this.size;
   var collidesBottom = enemy.y + enemy.size >= this.y;
   var collidesRight = enemy.x <= this.x + this.size;
-  var collidesLeft = enemy.x + enemy.size >= this.x;
   
-
-
   return collidesRight && collidesBottom && collidesTop;
   
 }

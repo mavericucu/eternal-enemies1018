@@ -8,6 +8,7 @@ function Game(canvasElement) {
     x: 0,
     y: this.canvasElement.height / 2
   }
+  this.gameIsOver = false;
 }
 
 Game.prototype.start = function() {
@@ -43,7 +44,9 @@ Game.prototype.startLoop = function() {
     this.clearAll();
     this.drawAll();
 
-    requestAnimationFrame(loop);
+    if (!this.gameIsOver) {
+      requestAnimationFrame(loop);
+    }
 
   }.bind(this);
 
@@ -76,11 +79,26 @@ Game.prototype.drawAll = function() {
 Game.prototype.checkAllCollisions = function() {
   this.enemies.forEach(function(enemy, index) {
     if (this.player.collidesWithEnemy(enemy)) {
+      this.player.lives--;
+      this.lostLive(this.player.lives);
       this.enemies.splice(index, 1);
+
+      if (!this.player.lives) {
+        this.gameIsOver = true;
+        this.finishGame();
+      }
     }
   }.bind(this)); 
 }
 
 Game.prototype.onGameOverCallback = function(callback) {
   this.gameOverCallback = callback;
+}
+
+Game.prototype.onLiveLost = function(callback) {
+  this.lostLive = callback;
+}
+
+Game.prototype.finishGame = function() {
+  this.gameOverCallback();
 }

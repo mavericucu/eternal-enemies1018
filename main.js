@@ -14,6 +14,8 @@ function main() {
 
   var startButton;
   var restartButton;
+
+  var livesElement;
   
   function buildSplash() {
     splashScreen = buildDOM(`
@@ -48,12 +50,18 @@ function main() {
     document.body.prepend(gameScreen);
 
     var canvasElement = document.querySelector('canvas');
+    livesElement = document.querySelector('p.lives');
 
     var game = new Game(canvasElement);
     game.start();
 
     game.onGameOverCallback(destroyGameScreen);
+    game.onLiveLost(updateLives);
 
+  }
+
+  function updateLives(lives) {
+    livesElement.innerText = lives;
   }
 
   function destroyGameScreen() {
