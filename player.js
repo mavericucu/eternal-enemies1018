@@ -12,6 +12,15 @@ function Player(canvasElement, initialPosition) {
 }
 
 Player.prototype.update = function() {
+
+  if (this.y <= this.size / 2) {
+    this.setDirection(1);
+  }
+
+  if (this.y >= this.canvasElement.height - this.size / 2) {
+    this.setDirection(-1);
+  }
+
   this.y += this.speed * this.direction;
 }
 
@@ -21,5 +30,17 @@ Player.prototype.setDirection = function(direction) {
 
 Player.prototype.draw = function() {
   this.ctx.fillRect(this.x, this.y - this.size / 2, this.size, this.size)
+}
 
+Player.prototype.collidesWithEnemy = function(enemy) {
+
+  var collidesTop = enemy.y <= this.y + this.size;
+  var collidesBottom = enemy.y + enemy.size >= this.y;
+  var collidesRight = enemy.x <= this.x + this.size;
+  var collidesLeft = enemy.x + enemy.size >= this.x;
+  
+
+
+  return collidesRight && collidesBottom && collidesTop;
+  
 }

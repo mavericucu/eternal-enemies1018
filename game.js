@@ -20,6 +20,7 @@ Game.prototype.start = function() {
 Game.prototype.startLoop = function() {
 
   this.player = new Player(this.canvasElement, this.initialPositionPlayer);
+  this.enemies.push(new Enemy(this.canvasElement));
 
   this.handleKeyUp = function(event) {
     if (event.key === 'ArrowUp') {
@@ -33,6 +34,11 @@ Game.prototype.startLoop = function() {
 
   var loop = function() {
 
+    if (Math.random() > 0.97) {
+      this.enemies.push(new Enemy(this.canvasElement));
+    }
+
+    this.checkAllCollisions();
     this.updateAll();
     this.clearAll();
     this.drawAll();
@@ -46,16 +52,33 @@ Game.prototype.startLoop = function() {
 
 Game.prototype.updateAll = function() {
   this.player.update();
+  this.enemies.forEach(function(enemy) {
+    enemy.update();
+  })
   
 }
 
 Game.prototype.clearAll = function() {
   this.ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+
+  this.enemies = this.enemies.filter(function(enemy) {
+    return enemy.isInCanvas();
+  });
 }
 
 Game.prototype.drawAll = function() {
   this.player.draw();
+  this.enemies.forEach(function(enemy) {
+    enemy.draw();
+  })
+}
 
+Game.prototype.checkAllCollisions = function() {
+  this.enemies.forEach(function(enemy, index) {
+    if (this.player.collidesWithEnemy(enemy)) {
+      this.enemies.splice(index, 1);
+    }
+  }.bind(this)); 
 }
 
 Game.prototype.onGameOverCallback = function(callback) {
