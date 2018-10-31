@@ -41,7 +41,7 @@ function main() {
     gameScreen = buildDOM(`
       <main>
         <p class="lives">3</p>     
-        <canvas></canvas>   
+        <canvas width="640px" height="480px"></canvas>   
       </main>
     `);
 
