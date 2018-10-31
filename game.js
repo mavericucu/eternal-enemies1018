@@ -15,9 +15,29 @@ Game.prototype.start = function() {
 
 Game.prototype.startLoop = function() {
 
-  setTimeout(function() {
-    this.gameOverCallback();
-  }.bind(this), 3000)
+
+  var loop = function() {
+    
+    this.updateAll();
+    this.clearAll();
+    this.drawAll();
+
+    requestAnimationFrame(loop);
+
+  }.bind(this);
+
+  loop();
+}
+
+Game.prototype.updateAll = function() {
+
+}
+
+Game.prototype.clearAll = function() {
+
+}
+
+Game.prototype.drawAll = function() {
 
 }
 
