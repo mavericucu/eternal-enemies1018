@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-function Player(canvasElement, initialPosition) {
+function Player (canvasElement, initialPosition) {
   this.x = initialPosition.x;
   this.y = initialPosition.y;
   this.size = 50;
@@ -11,8 +11,7 @@ function Player(canvasElement, initialPosition) {
   this.ctx = this.canvasElement.getContext('2d');
 }
 
-Player.prototype.update = function() {
-
+Player.prototype.update = function () {
   if (this.y <= this.size / 2) {
     this.setDirection(1);
   }
@@ -22,22 +21,20 @@ Player.prototype.update = function() {
   }
 
   this.y += this.speed * this.direction;
-}
+};
 
-Player.prototype.setDirection = function(direction) {
+Player.prototype.setDirection = function (direction) {
   this.direction = direction;
-}
+};
 
-Player.prototype.draw = function() {
-  this.ctx.fillRect(this.x, this.y - this.size / 2, this.size, this.size)
-}
+Player.prototype.draw = function () {
+  this.ctx.fillRect(this.x, this.y - this.size / 2, this.size, this.size);
+};
 
-Player.prototype.collidesWithEnemy = function(enemy) {
-
+Player.prototype.collidesWithEnemy = function (enemy) {
   var collidesTop = enemy.y <= this.y + this.size;
   var collidesBottom = enemy.y + enemy.size >= this.y;
   var collidesRight = enemy.x <= this.x + this.size;
-  
+
   return collidesRight && collidesBottom && collidesTop;
-  
-}
+};
